@@ -5,10 +5,12 @@
 
 One click on the left ribbon turns the **currently open note** into an audio file,
 saved locally in your vault and named after the note. Powered by
-[SiliconFlow](https://siliconflow.cn) text-to-speech.
+[SiliconFlow](https://siliconflow.cn) or [OpenRouter](https://openrouter.ai)
+text-to-speech.
 
 点击左侧栏的图标,即可把**当前打开的笔记**生成为一段音频,存到你库里的本地文件夹,
-文件名跟笔记名走。语音由[硅基流动 (SiliconFlow)](https://siliconflow.cn) 提供。
+文件名跟笔记名走。语音可由[硅基流动 (SiliconFlow)](https://siliconflow.cn)
+或 [OpenRouter](https://openrouter.ai) 提供。
 
 > This is the **release-only** repository (built plugin for distribution).
 > 本仓库只用于**发布构建产物**。
@@ -41,11 +43,16 @@ not stare at it. Lumen Echo makes that one click away.
 
 ### Setup
 
-1. Get a SiliconFlow API key from <https://siliconflow.cn>.
+1. Get a SiliconFlow API key from <https://siliconflow.cn> or an OpenRouter key
+   from <https://openrouter.ai>.
 2. Settings → **Lumen Echo**:
-   - **API key** — your `sk-...` key
-   - **Model** — `FunAudioLLM/CosyVoice2-0.5B` (default) or `fnlp/MOSS-TTSD-v0.5`
+   - **TTS provider** — SiliconFlow or OpenRouter
+   - **API key** — your provider key
+   - **Model** — SiliconFlow defaults to `FunAudioLLM/CosyVoice2-0.5B`;
+     OpenRouter defaults to `google/gemini-3.1-flash-tts-preview`
    - **Voice** — alex / anna / bella / benjamin / charles / claire / david / diana
+     for SiliconFlow; `Sulafat` is the OpenRouter Gemini default for warm
+     long-form narration
    - **Speed** — 0.25 – 4.0
    - **Storage folder** — where mp3 files go (default `Audio`)
    - **When regenerating** — overwrite / keep one per voice / keep every version
@@ -55,14 +62,16 @@ not stare at it. Lumen Echo makes that one click away.
 1. Open a note.
 2. Click the **Lumen Echo** icon in the left ribbon, or run the command
    *“Read current note aloud”*.
-3. The note's Markdown is cleaned into plain speech, sent to SiliconFlow, and the
-   resulting `.mp3` is saved and opened so you can press play.
+3. The note's Markdown is cleaned into plain speech, sent to the selected TTS
+   provider, and the resulting audio file is saved and opened so you can press play.
 
 ### Notes
 
 - Long notes are split into chunks and the audio segments are stitched together.
 - Markdown (code blocks, links, images, frontmatter, formatting) is stripped so
   the engine reads only the prose.
+- OpenRouter Gemini TTS returns PCM, so Lumen Echo wraps it as a playable `.wav`;
+  other providers continue to save `.mp3`.
 
 ---
 
@@ -92,11 +101,15 @@ Lumen Echo 让这件事只需一次点击。
 
 ### 配置
 
-1. 在 <https://siliconflow.cn> 获取 SiliconFlow API key。
+1. 在 <https://siliconflow.cn> 获取 SiliconFlow API key,或在
+   <https://openrouter.ai> 获取 OpenRouter key。
 2. 设置 → **Lumen Echo**:
-   - **API key** —— 你的 `sk-...` 密钥
-   - **Model** —— 默认 `FunAudioLLM/CosyVoice2-0.5B`,可选 `fnlp/MOSS-TTSD-v0.5`
-   - **Voice** —— alex / anna / bella / benjamin / charles / claire / david / diana
+   - **TTS provider** —— SiliconFlow 或 OpenRouter
+   - **API key** —— 对应服务的密钥
+   - **Model** —— SiliconFlow 默认 `FunAudioLLM/CosyVoice2-0.5B`;
+     OpenRouter 默认 `google/gemini-3.1-flash-tts-preview`
+   - **Voice** —— SiliconFlow 可选 alex / anna / bella / benjamin / charles /
+     claire / david / diana; OpenRouter Gemini 默认 `Sulafat`,适合温暖耐听的长文朗读
    - **Speed** —— 语速 0.25 – 4.0
    - **Storage folder** —— 音频存放文件夹(默认 `Audio`)
    - **When regenerating** —— 重新生成时:覆盖 / 每个音色各留一份 / 每次都留
@@ -105,12 +118,14 @@ Lumen Echo 让这件事只需一次点击。
 
 1. 打开一篇笔记。
 2. 点击左侧栏的 **Lumen Echo** 图标,或运行命令 *“Read current note aloud”*。
-3. 笔记会被清洗成纯文本送去合成,生成的 `.mp3` 自动保存并打开,点击即可播放。
+3. 笔记会被清洗成纯文本送去合成,生成的音频自动保存并打开,点击即可播放。
 
 ### 说明
 
 - 长笔记会自动分段合成并拼接成一个音频。
 - Markdown(代码块、链接、图片、YAML 头、格式符号)会被清除,只朗读正文。
+- OpenRouter Gemini TTS 返回 PCM,Lumen Echo 会自动封装成可播放的 `.wav`;
+  其他服务继续保存为 `.mp3`。
 
 ---
 
